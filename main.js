@@ -179,22 +179,51 @@ function createNewWindow (url, mainWindow) {
   })
 }
 
-startUpdater ( {
-  const { autoUpdater } = require('electron-updater')
-  autoUpdater.checkForUpdatesAndNotify()
+const { autoUpdater } = require("electron-updater");
+console.log("autoUpdater entered");
+autoUpdater.logger = require("electron-log");
+autoUpdater.logger.transports.file.level = "info";
+autoUpdater.checkForUpdates();
+autoUpdater.on("checking-for-update", () => {
+    console.log("Checking for updates...");
+});
+autoUpdater.on("update-available", (info) => {
+    const dialogOpts = {
+        type: "info",
+        buttons: ["Alright!"],
+        title: "EvClient Update",
+        message: "New Version of EvClient has been released",
+        detail: "It will be downloaded in the background and notify you when the download is finished.",
+    };
 
-  autoUpdater.once('update-available', () => {
-    this.gameWindow.webContents.executeJavaScript(
-      'alert("Update is available and with be installed in the background.")'
-    )
-})
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        if (returnValue.response === 0) console.log("Version message seen");
+    });
+});
+autoUpdater.on("update-not-available", () => {
+    console.log("Version is up-to-date");
+});
+autoUpdater.on("download-progress", (progressObj) => {
+    console.log(
+        `Download Speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.transferred} + '/ ${progressObj.total}`
+    );
+});
+autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
+    const dialogOpts = {
+        type: "info",
+        buttons: ["Restart", "Later"],
+        title: "Application Update",
+        message: process.platform === "win32" ? releaseNotes : releaseName,
+        detail: "A new version has been downloaded. Restart the application to apply the updates.",
+    };
 
-autoUpdater.once('update-downloaded', () => {
-  this.gameWindow.webContents
-    .executeJavaScript('alert("The update will be installed now.")')
-    .then(() =>autoUpdater.quitAndInstall())
-    .catch((error) => console.log(error))
-})
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        if (returnValue.response === 0) autoUpdater.quitAndInstall();
+    });
+});
+autoUpdater.on("error", (error) => {
+    console.log(error);
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
