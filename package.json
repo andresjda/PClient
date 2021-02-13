@@ -15,9 +15,9 @@
     "pb-win": "electron-builder -w -p always",
     "build-mac": "electron-builder -m",
     "pack": "electron-builder --dir",
-    "dis": "electron-builder --x64 --mac",
+    "dist": "electron-builder --x64 --mac",
     "gh-publish": "electron-builder --x64 --mac -p always",
-    "package-win": "electron-packager . p-client --overwrite --asar=true --platform=win32 --arch=x64 --icon=assets/icons/logo.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"PClient\""
+    "package-win": "electron-packager . p-client --overwrite --asar=true --platform=win32 --arch=x64 --icon=assets/logo.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"PClient\""
   },
   "build": {
     "appId": "org.electron.EvClient",
@@ -69,7 +69,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "discord-rpc": "^3.1.4",
+    "discord-rpc": "^3.2.0",
     "electron-localshortcut": "^3.2.1",
     "electron-log": "^4.3.1",
     "electron-prompt": "^1.6.1",

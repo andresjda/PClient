@@ -1,14 +1,16 @@
+/* eslint-disable quotes */
 /* eslint-disable no-undef */
 /* eslint-disable semi */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-var */
-//import 'v8-compile-cache'
+// require: ('v8-compile-cache')
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, screen, clipboard, dialog } = require("electron");
 const shortcut = require("electron-localshortcut");
 const path = require("path");
 const prompt = require("electron-prompt");
 const discord = require("discord-rpc");
+const autoUpdater = require("electron-updater").autoUpdater;
 var mainWindow;
 let fromlogin = false;
 
@@ -32,32 +34,27 @@ function Init () {
     removeMenu: true
   })
 
+  const RPC = require("discord-rpc");
   const rpc = new Client({
     transport: 'ipc'
-  })
+  });
+
+  rpc.on("ready", () => {
+    rpc.setActivity({
+      details: "In game",
+      state: "https://discord.com/invite/3UK38J3fuE",
+      startTimestamp: new Date(),
+      largeImageKey: "icon",
+      largeImageText: "https://discord.com/invite/3UK38J3fuE"
+    });
+
+    console.log("Rich preasence is now active");
+  });
+
   rpc.login({
-    clientId: '809694543490056192'
-  })
-  var date = Date.now()
-  rpc.once('connected', () => {
-    setInterval(() => {
-      rpc.setActivity({
-        largeImageKey: 'logo',
-        largeImageText: `PClient v${app.getVersion()}`,
-        startTimestamp: new Date(),
-        details: `PClient v${app.getVersion()}`
-      })
-    }, 1e4)
-  })
+    clientId: "809694543490056192"
+  });
 
-  app.on('before-quit', () => rpc.destroy())
-
-  mainWindow.on('close', () => {
-    mainWindow = null
-    if (!fromlogin) {
-      app.quit()
-    }
-  })
   mainWindow.setFullScreen(true)
   mainWindow.loadURL('https://ev.io/')
   mainWindow.setResizable(false)
@@ -177,51 +174,29 @@ function createNewWindow (url, mainWindow) {
   })
 }
 
-const { autoUpdater } = require("electron-updater");
-console.log("autoUpdater entered");
-autoUpdater.logger = require("electron-log");
-autoUpdater.logger.transports.file.level = "info";
-autoUpdater.checkForUpdates();
-autoUpdater.on("checking-for-update", () => {
-    console.log("Checking for updates...");
-});
-autoUpdater.on("update-available", (info) => {
-    const dialogOpts = {
-        type: "info",
-        buttons: ["Alright!"],
-        title: "EvClient Update",
-        message: "New Version of EvClient has been released",
-        detail: "It will be downloaded in the background and notify you when the download is finished.",
-    };
+const sendStatusToWindow = (text) => {
+  log.info(text);
+  if (mainWindow) {
+    mainWindow.webContents.send('message', text);
+  }
+};
 
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) console.log("Version message seen");
-    });
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...');
 });
-autoUpdater.on("update-not-available", () => {
-    console.log("Version is up-to-date");
+autoUpdater.on('update-available', info => {
+  sendStatusToWindow('Update available.');
 });
-autoUpdater.on("download-progress", (progressObj) => {
-    console.log(
-        `Download Speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.transferred} + '/ ${progressObj.total}`
-    );
+autoUpdater.on('update-not-available', info => {
+  sendStatusToWindow('Update not available.');
 });
-autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-        type: "info",
-        buttons: ["Restart", "Later"],
-        title: "Application Update",
-        message: process.platform === "win32" ? releaseNotes : releaseName,
-        detail: "A new version has been downloaded. Restart the application to apply the updates.",
-    };
-
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) autoUpdater.quitAndInstall();
-    });
+autoUpdater.on('download-progress', info => {
+  sendStatusToWindow('Update is downloading');
 });
-autoUpdater.on("error", (error) => {
-    console.log(error);
-});
+autoUpdater.on('update-downloaded', info => {
+  // Maybe add delay?
+  autoUpdater.quitAndInstall();
+})
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -229,4 +204,3 @@ autoUpdater.on("error", (error) => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
-
