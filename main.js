@@ -186,8 +186,8 @@ autoUpdater.on("update-available", (info) => {
     const dialogOpts = {
         type: "info",
         buttons: ["Alright!"],
-        title: "EvClient Update",
-        message: "New Version of EvClient has been released",
+        title: "PClient Update",
+        message: "New Version of PClient has been released",
         detail: "It will be downloaded in the background and notify you when the download is finished.",
     };
 
