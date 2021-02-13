@@ -2,17 +2,15 @@
 /* eslint-disable semi */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-var */
-import 'v8-compile-cache'
+//import 'v8-compile-cache'
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, screen, clipboard, dialog } from 'electron'
-import { register } from 'electron-localshortcut'
-import { join } from 'path'
-import prompt from 'electron-prompt'
-import { Client } from 'discord-rpc'
-
-import { AppUpdater, autoUpdater } from 'electron-updater'
-var mainWindow
-let fromlogin = false
+const { app, BrowserWindow, screen, clipboard, dialog } = require("electron");
+const shortcut = require("electron-localshortcut");
+const path = require("path");
+const prompt = require("electron-prompt");
+const discord = require("discord-rpc");
+var mainWindow;
+let fromlogin = false;
 
 if (process.platform === 'win32') {
   app.commandLine.appendSwitch('ignore-gpu-blacklist')
