@@ -34,7 +34,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "assests/icons/logo.png",
+      "icon": "assets/logo.png",
       "publish": [
         {
           "provider": "github",
@@ -55,13 +55,13 @@
       "allowToChangeInstallationDirectory": true
     },
     "dmg": {
-      "title": "EvClient",
+      "title": "PClient",
       "artifactName": "EvClient-Mac.dmg"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PandasMagic/PClient.git"
+    "url": "https://github.com/PandasMagic/PClient"
   },
   "keywords": [
     "Ev",
