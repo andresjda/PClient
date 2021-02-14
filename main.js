@@ -1,5 +1,4 @@
-/* eslint-disable quotes */
-/* eslint-disable no-undef */
+// Modules to control application life and create native browser window
 const { app, BrowserWindow, screen, clipboard, dialog } = require("electron");
 const shortcut = require("electron-localshortcut");
 const path = require("path");
@@ -28,26 +27,26 @@ function Init() {
         removeMenu: true,
     });
 
-    const RPC = require("discord-rpc");
-  const rpc = new Client({
-    transport: 'ipc'
-  });
-
-  rpc.on("ready", () => {
-    rpc.setActivity({
-      details: "In game",
-      state: "https://discord.com/invite/3UK38J3fuE",
-      startTimestamp: new Date(),
-      largeImageKey: "icon",
-      largeImageText: "https://discord.com/invite/3UK38J3fuE"
+    const rpc = new discord.Client({
+        transport: "ipc",
+    });
+    rpc.login({
+        clientId: "809694543490056192",
+    });
+    var date = Date.now();
+    rpc.once("connected", () => {
+        setInterval(() => {
+            rpc.setActivity({
+                largeImageKey: "logo",
+                largeImageText: `https://discord.com/invite/3UK38J3fuE`,
+                startTimestamp: date,
+                details: `In game`,
+                state: "https://discord.com/invite/3UK38J3fuE"
+            });
+        }, 1e4);
     });
 
-    console.log("Rich preasence is now active");
-  });
-
-  rpc.login({
-    clientId: "809694543490056192"
-  });
+    app.on("before-quit", () => rpc.destroy());
 
     mainWindow.on("close", () => {
         mainWindow = null;
@@ -186,8 +185,8 @@ autoUpdater.on("update-available", (info) => {
     const dialogOpts = {
         type: "info",
         buttons: ["Alright!"],
-        title: "PClient Update",
-        message: "New Version of PClient has been released",
+        title: "EvClient Update",
+        message: "New Version of EvClient has been released",
         detail: "It will be downloaded in the background and notify you when the download is finished.",
     };
 
