@@ -26,27 +26,27 @@ function Init() {
         },
         removeMenu: true,
     });
-
+    
     const rpc = new discord.Client({
         transport: "ipc",
     });
     rpc.login({
-        clientId: "809694543490056192",
+        clientId: "803733389885833236",
     });
     var date = Date.now();
     rpc.once("connected", () => {
         setInterval(() => {
             rpc.setActivity({
                 largeImageKey: "logo",
-                largeImageText: `https://discord.com/invite/3UK38J3fuE`,
+                largeImageText: `PClient Early Release`,
                 startTimestamp: date,
-                details: `In game`,
-                state: "https://discord.com/invite/3UK38J3fuE"
+                details: `PClient Early Release`,
+                state: `https://discord.com/invite/3UK38J3fuE`
             });
         }, 1e4);
     });
 
-    app.on("before-quit", () => rpc.destroy());
+    app.on("before-quit", () => rpc.destroy());";
 
     mainWindow.on("close", () => {
         mainWindow = null;
@@ -73,18 +73,16 @@ function Init() {
     });
 
     function LinkBox() {
-        function input() {
-            var myPrompt = prompt({
-                title: "Join a Private game",
-                label: "Please enter your Invite link here",
-                value: paste,
-                inputAttrs: {
-                    type: "url",
-                },
-                type: "input",
-            });
-            return myPrompt;
-        }
+        var myPrompt = prompt({
+            title: "Join a Private game",
+            label: "Please enter your Invite link here",
+            value: paste,
+            inputAttrs: {
+                type: "url",
+            },
+            type: "input",
+        });
+        return myPrompt;
     }
 
     function ispasted(url) {
