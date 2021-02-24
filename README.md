@@ -3,12 +3,9 @@ PClient or Panda Client is a client for Ev.io that aims for both performance and
 
 
 ## Installation:
-1. Install p-client [here](https://github.com/PandasMagic/PClient/).
+1. Install PClient Setup exe.
 2. Run it.
-3. A pop up will apear. This is because ev.io is not a known Windows publisher.
-4. Click 'More Info'.
-5. Click 'Run anyway'.
-6. Install.
+3. It should automatically open and run!
 
 ## Discord
 
