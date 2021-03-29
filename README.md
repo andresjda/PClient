@@ -4,7 +4,7 @@
 PClient or Panda Client is a client for Ev.io that aims for both performance and features that enrich the games experience.
 
 # Support
-| Platform | File Extension |
+| Platform | File Name |
 |-|-|
 | Windows | `.exe` |
 | macOS | `.dmg` |
