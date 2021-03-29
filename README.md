@@ -1,7 +1,7 @@
 # PClient
 [![Total downloads](https://img.shields.io/github/downloads/PandasMagic/PClient/total)](https://github.com/PandasMagic/PClient/releases)
 
-PClient or Panda Client is a client for Ev.io that aims for both performance and features that enrich the games experience.
+PClient or Panda Client is a client for ev.io that aims for both performance and features that enrich the games experience.
 
 # Support
 | Platform | File Name |
