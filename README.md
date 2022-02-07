@@ -11,8 +11,6 @@ PClient or Panda Client is a client for ev.io that aims for both performance and
 | macOS | `.dmg` |
 | Linux | `.AppImage` |
 
-**Linux is not yet supported**
-
 ## Installation:
 1. Install PClient Setup exe/dmg.
 2. Run it.
