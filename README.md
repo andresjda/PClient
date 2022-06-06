@@ -1,3 +1,5 @@
+# NO LONGER MAINTAINED
+
 # PClient
 [![Discord server](https://discord.com/api/guilds/807425525916237855/widget.png)](https://discord.com/invite/3UK38J3fuE)
 [![Total downloads](https://img.shields.io/github/downloads/PandasMagic/PClient/total)](https://github.com/PandasMagic/PClient/releases)
